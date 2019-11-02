@@ -1,14 +1,7 @@
 <template>
   <div class="content">
     <!-- 头部 -->
-    <div class="topBar">
-      <div class="search">
-        <icon type="search"
-              size="16"
-              color="#bbb" />
-        <span>搜索</span>
-      </div>
-    </div>
+    <TopBar />
     <!-- 轮播图 -->
     <swiper indicator-dots
             autoplay
@@ -25,19 +18,29 @@
     </swiper>
     <!-- 分类格 -->
     <div class="category">
-      <div class="categoryItem" v-for="item in catitemsData" :key="item.name">
-        <img :src="item.image_src" alt="">
+      <div class="categoryItem"
+           v-for="item in catitemsData"
+           :key="item.name">
+        <img :src="item.image_src"
+             alt="">
       </div>
     </div>
     <!-- 楼层区 -->
     <ul class="floor">
-      <li v-for="(item, index) in floordata" :key="index">
-        <img class="img" :src="item.floor_title.image_src" alt="">
+      <li v-for="(item, index) in floordata"
+          :key="index">
+        <img class="img"
+             :src="item.floor_title.image_src"
+             alt="">
         <div class="product_list">
-            <img :src="item.product_list[0].image_src" alt="">
+          <img :src="item.product_list[0].image_src"
+               alt="">
           <div class="right">
-            <block v-for="(imgItem, imgIndex) in item.product_list" :key="imgItem.name">
-              <img :src="imgItem.image_src" v-if="imgIndex" alt="" >
+            <block v-for="(imgItem, imgIndex) in item.product_list"
+                   :key="imgItem.name">
+              <img :src="imgItem.image_src"
+                   v-if="imgIndex"
+                   alt="">
             </block>
           </div>
         </div>
@@ -47,7 +50,13 @@
 </template>
 
 <script>
+import TopBar from '@/components/TopBar'
+
 export default {
+
+  components: {
+    TopBar
+  },
   data () {
     return {
       // 存放轮播图数据
@@ -94,29 +103,6 @@ export default {
 </script>
 
 <style lang="less">
-.topBar {
-  width: 100%;
-  height: 100rpx;
-  background-color: #eb4450;
-  padding: 0 16rpx;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  .search {
-    width: 100%;
-    height: 60rpx;
-    background-color: #fff;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    span {
-      color: #bbb;
-      font-size: 16px;
-      margin-left: 16rpx;
-    }
-  }
-}
 swiper {
   height: 340rpx;
   img {
@@ -144,11 +130,11 @@ swiper {
   }
 }
 ul {
-  li{
+  li {
     margin-bottom: 20rpx;
   }
 }
-.img{
+.img {
   width: 100%;
   height: 88rpx;
 }
