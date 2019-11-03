@@ -13,16 +13,20 @@
               :class="{active:activeIndex===index}">{{item.cat_name}}</li>
         </ul>
         <!-- 右边 -->
-        <div class="right" v-if="isInit">
+        <div class="right"
+             v-if="isInit">
           <img src="../../../static/icon/titleImage.png"
                alt="">
-          <div class="cate2" v-for="(item1, index1) in categoryList[activeIndex].children" :key="item1.cat_id">
+          <div class="cate2"
+               v-for="(item1, index1) in categoryList[activeIndex].children"
+               :key="item1.cat_id">
             <div class="title">
               <p>/ <span>{{item1.cat_name}}</span> /</p>
             </div>
             <ul class="cate3">
               <li v-for="(item2, index2) in item1.children"
-                  :key="item2.cat_id">
+                  :key="item2.cat_id"
+                  @click="toList(item2.cat_name)">
                 <img :src="item2.cat_icon"
                      alt="">
                 <p>{{item2.cat_name}}</p>
@@ -64,13 +68,17 @@ export default {
         this.categoryList = data
         this.isInit = true
       })
+    },
+    // 点击获取对应的关键字去到列表页面
+    toList (name) {
+      wx.navigateTo({ url: '/pages/list/main?keyword=' + name })
     }
   }
 }
 </script>
 
 <style lang="less">
-@red:#eb4450;
+@red: #eb4450;
 .main {
   // margin-top: 20rpx;
   display: flex;
@@ -91,11 +99,11 @@ export default {
       color: #333;
       font-size: 14px;
     }
-    .active{
+    .active {
       color: @red;
       background-color: #fff;
       position: relative;
-      &::before{
+      &::before {
         position: absolute;
         left: 0;
         top: 22rpx;

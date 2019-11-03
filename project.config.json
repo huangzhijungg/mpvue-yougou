@@ -51,6 +51,14 @@
 					"id": -1,
 					"name": "pages/category/main",
 					"pathName": "pages/category/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "list",
+					"pathName": "pages/list/main",
+					"query": "name=华为",
 					"scene": null
 				}
 			]
