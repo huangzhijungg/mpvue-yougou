@@ -1,3 +1,4 @@
+// 将基地址定义为常量
 const BASE_URL = 'https://www.uinav.com'
 
 export default function request (options) {

@@ -1,25 +1,31 @@
 <template>
   <div>
-   <div class="top" :style="{position:!isScroll?'static':'fixed'}">
+    <div class="top"
+         :style="{position:!isScroll?'static':'fixed'}">
       <!-- 头部搜索框 -->
-    <div class="headerTop">
-      <icon type="search"
-            size="14"
-            color="#bbb" />
-      <input type="text" value="小米" v-model="keyword" confirm-type="go" @confirm="reload">
-      <!----------------------------------------------------------------- @confirm: 回车事件 -->
+      <div class="headerTop">
+        <icon type="search"
+              size="14"
+              color="#bbb" />
+        <input type="text"
+               value="小米"
+               v-model="keyword"
+               confirm-type="go"
+               @confirm="reload">
+        <!----------------------------------------------------------------- @confirm: 回车事件 -->
+      </div>
+      <!-- 排序按钮 -->
+      <ul class="filter">
+        <li v-for="(item, index) in filterList"
+            :key="index"
+            @click="activeIndex=index"
+            :class="{active:activeIndex===index}">{{item}}</li>
+      </ul>
     </div>
-    <!-- 排序按钮 -->
-    <ul class="filter">
-      <li v-for="(item, index) in filterList"
-          :key="index"
-          @click="activeIndex=index"
-          :class="{active:activeIndex===index}">{{item}}</li>
-    </ul>
-   </div>
 
     <!-- 商品列表 -->
-    <ul class="goods-list">
+    <ul class="goods-list"
+        :style="{marginTop:isScroll?'220rpx':'0'}">
       <li v-for="(item, index) in goodsList"
           :key="item.cat_id">
         <img :src="item.goods_big_logo"
@@ -31,11 +37,13 @@
       </li>
     </ul>
     <!-- 到最后一页没有数据了给得提示 -->
-    <p class="bottom" v-show="isLastPage">后面没有了哦!</p>
+    <p class="bottom"
+       v-show="isLastPage">后面没有了哦!</p>
   </div>
 </template>
 
 <script>
+// 定义页容量为常量
 const PAGE_SIZE = 10
 export default {
   data () {
@@ -45,6 +53,7 @@ export default {
         '销量',
         '价格'
       ],
+      // 当前激活的元素下标
       activeIndex: 0,
       // 关键字
       keyword: '',
@@ -56,40 +65,46 @@ export default {
       isScroll: false
     }
   },
+  // 小程序生命周期钩子
   onLoad (options) {
     console.log(options.keyword)
     // 定义关键字,将分类页传过来的给他赋值
     this.keyword = options.keyword
-    // 重新加载置为false
-    this.isLastPage = false
-    // 清空原来数据
-    this.goodsList = []
-    // 获取数据方法
-    this.getGoodsList()
-    // 定义页码为1
-    this.pageNum = 1
+    // // 重新加载置为false
+    // this.isLastPage = false
+    // // 清空原来数据
+    // this.goodsList = []
+    // // 定义页码为1
+    // this.pageNum = 1
     // 是否在请求中
     this.isRequest = false
-  },
-  // 下拉刷新
-  onPullDownRefresh () {
+    // // 获取数据方法
+    // this.getGoodsList()
+    // 调用回车事件
     this.reload()
   },
-  // 上拉触底50加载下一页
+  // 下拉刷新执行函数
+  onPullDownRefresh () {
+    // 下拉时改为false
+    this.isScroll = false
+    this.reload()
+  },
+  // 上拉执行函数,触底50加载下一页
   onReachBottom () {
     // 页码加一页
     this.pageNum++
     // 重新发送请求
     this.getGoodsList()
   },
-  // 监听页面是否滚动
+  // 页面滚动执行函数,监听页面是否滚动
   onPageScroll () {
+    // 监听页面是否滚动,改为false
     this.isScroll = true
     // console.log(this.isScroll)
   },
   methods: {
     getGoodsList () {
-      // 判断是否在发请求或是不是最后一页,如果是就不会再发请求直接retrun
+      // 判断是否正在发请求或是不是最后一页,如果是就不会再发请求直接retrun
       if (this.isRequest || this.isLastPage) {
         return
       }
@@ -118,12 +133,12 @@ export default {
     reload () {
       // 特码重置为1
       this.pageNum = 1
-      // 调用方法发请求
-      this.getGoodsList()
       // 将原来的数据清空
       this.goodsList = []
       // 将是否为最后一页设为false
       this.isLastPage = false
+      // 调用方法发请求
+      this.getGoodsList()
     }
   }
 }
@@ -131,7 +146,7 @@ export default {
 
 <style lang="less">
 @red: #eb4450;
-.top{
+.top {
   position: fixed;
   width: 100%;
   background-color: #fff;
@@ -204,7 +219,7 @@ export default {
     }
   }
 }
-.bottom{
+.bottom {
   color: #ddd;
   text-align: center;
   margin: 10rpx 0;

@@ -55,6 +55,7 @@ export default {
       isInit: false
     }
   },
+  // 小程序生命周期钩子
   onLoad () {
     // 获取分类总数据
     this.getCategory()
