@@ -55,11 +55,15 @@ export default {
       isInit: false
     }
   },
-  // 小程序生命周期钩子
-  onLoad () {
+  created () {
     // 获取分类总数据
     this.getCategory()
   },
+  // // 小程序生命周期钩子
+  // onLoad () {
+  //   // 获取分类总数据
+  //   this.getCategory()
+  // },
   methods: {
     getCategory () {
       this.$request({

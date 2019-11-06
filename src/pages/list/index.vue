@@ -3,7 +3,7 @@
     <div class="top"
          :style="{position:!isScroll?'static':'fixed'}">
       <!-- 头部搜索框 -->
-      <div class="headerTop">
+      <!-- <div class="headerTop">
         <icon type="search"
               size="14"
               color="#bbb" />
@@ -12,8 +12,9 @@
                v-model="keyword"
                confirm-type="go"
                @confirm="reload">
-        <!----------------------------------------------------------------- @confirm: 回车事件 -->
-      </div>
+      </div> -->
+
+      <Search @confirm="inputHeadler" :query="keyword"/>
       <!-- 排序按钮 -->
       <ul class="filter">
         <li v-for="(item, index) in filterList"
@@ -27,7 +28,8 @@
     <ul class="goods-list"
         :style="{marginTop:isScroll?'220rpx':'0'}">
       <li v-for="(item, index) in goodsList"
-          :key="item.cat_id">
+          :key="index"
+          @click="toItem(item.goods_id)">
         <img :src="item.goods_big_logo"
              alt="">
         <div class="right">
@@ -43,9 +45,14 @@
 </template>
 
 <script>
+import Search from '@/components/search'
 // 定义页容量为常量
-const PAGE_SIZE = 10
+const PAGE_SIZE = 30
 export default {
+  // 注册的组件
+  components: {
+    Search
+  },
   data () {
     return {
       filterList: [
@@ -67,7 +74,7 @@ export default {
   },
   // 小程序生命周期钩子
   onLoad (options) {
-    console.log(options.keyword)
+    // console.log(options.keyword)
     // 定义关键字,将分类页传过来的给他赋值
     this.keyword = options.keyword
     // // 重新加载置为false
@@ -129,6 +136,10 @@ export default {
         this.isRequest = false
       })
     },
+    inputHeadler (data) {
+      this.keyword = data
+      this.reload()
+    },
     // 输入框按下回车调用此方法
     reload () {
       // 特码重置为1
@@ -139,6 +150,10 @@ export default {
       this.isLastPage = false
       // 调用方法发请求
       this.getGoodsList()
+    },
+    // 点击每一个元素跳转到详情页面
+    toItem (goodsId) {
+      wx.navigateTo({ url: '/pages/item/main?goodsId=' + goodsId })
     }
   }
 }

@@ -3,7 +3,7 @@
     <!-- 对头部样式进行封装,方便多个组件之间进行复用 -->
     <!-- 头部 -->
     <div class="topBar">
-      <div class="search">
+      <div class="search" @click="toSearch">
         <icon type="search"
               size="16"
               color="#bbb" />
@@ -15,7 +15,12 @@
 
 <script>
 export default {
-
+  methods: {
+    toSearch () {
+      // 点击搜索框去到搜索页面
+      wx.navigateTo({ url: '/pages/search/main' })
+    }
+  }
 }
 </script>
 

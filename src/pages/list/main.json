@@ -2,5 +2,5 @@
   "navigationBarTitleText": "搜索",
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",
-  "onReachBottomDistance":50
+  "onReachBottomDistance":300
 }
